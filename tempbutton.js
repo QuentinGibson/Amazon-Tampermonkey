@@ -32,6 +32,7 @@
   quantitySelectorElement.type = 'number'
   quantitySelectorElement.min = 1
   quantitySelectorElement.max = 99
+  quantitySelectorElement.style.width = "50px"
   tables.appendChild(quantitySelectorElement)
 
 
