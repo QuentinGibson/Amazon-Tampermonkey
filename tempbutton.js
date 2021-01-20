@@ -38,11 +38,11 @@
 
   var locationSelectorElement = document.createElement('select')
   locationSelectorElement.innerHTML = `
-      <option value="ambient">Ambient<option> 
-      <option value="chilled">Chilled<option> 
-      <option value="frozen">Frozen<option> 
-      <option value="produce">Produce<option> 
-      <option value="hazard">Hazard<option> 
+      <option value="ambient">Ambient</option> 
+      <option value="chilled">Chilled</option> 
+      <option value="frozen">Frozen</option> 
+      <option value="produce">Produce</option> 
+      <option value="hazard">Hazard</option> 
   `
 
   tables.appendChild(locationSelectorElement)
@@ -88,5 +88,5 @@
     var day = date.getDate().toString();
     day = day.length > 0 ? day : '0' + day;
     return month + day + year.toString().slice(-2);
-}
+  }
 })();
