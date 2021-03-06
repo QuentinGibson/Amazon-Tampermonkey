@@ -25,10 +25,25 @@
       .find(row => row.startsWith('code'))
       .split('=')[1]
 
-      if (selectorCount > 0 && code != 'undefined') {
-        console.log(`The cookie "selector" exists, ${selectorCount} count!`)
+      const lastTime = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('lastTime'))
+      .split('=')[1]
+
+      const fifteenMinutesPassed = function () {
+        const past = new Date().getTime();
+        const fifteenMin = 1000 * 60 * 15;
+        return (new Date().getTime() - past >= fifteenMin);
+      }
+
+      if (selectorCount > 0 && code !== 'undefined') {
         const cookieIdle = findFirstIdle(allCodes)
         changeIdleToAnother(cookieIdle, code)
+        console.log(`The cookie "selector" exists, ${selectorCount} count!`)
+      } else if (selectorCount > 0 && fifteenMinutesPassed) {
+        const cookieIdle = findFirstIdle(allCodes)
+        changeIdleToAnother(cookieIdle, code)
+        console.log(`15 minutes passed, cleared Idle!`)
       }
     }
 
