@@ -15,13 +15,6 @@
   }
   const toteXPath = `/html/body/text()[2]`;
 
-  const baseUrl = "https://aftlite-na.amazon.com";
-  const setToteEndPoint = `${baseUrl}/wms/set_tote`;
-  const packProductEndPoint = `${baseUrl}/wms/pack_product`;
-  const closeToteEndPoint = `${baseUrl}/wms/close_tote`;
-  const finishEndPoint = `${baseUrl}/wms/finish_packing_picklist`;
-
-
   const currentInput = document.getElementsByName('tote_code') || document.getElementsByName('asin_or_upc')
   const submitButton = document.getElementsByName('submit')
 
