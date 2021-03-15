@@ -20,6 +20,14 @@
 
   const tote = getElementByXPath(toteXPath);
 
+  const table = document.getElementById('item_list_table')
+  const items = table.querySelectorAll('tr[style]')
+
+  for (item of items) {
+    const asin = document.querySelectorAll('td')[1]
+    const name = document.querySelectorAll('td')[2]
+  }
+
   function getElementByXPath(path) {
     return document.evaluate(
       path,
