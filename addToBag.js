@@ -4,7 +4,7 @@
 // @version      1.0
 // @description  Add button that packs items into its original tote
 // @author       QuentinGibson
-// @match        https://aftlite-portal.amazon.com/indirect_action
+// @match        https://aftlite-na.amazon.com/wms/pack_by_picklist/*
 // @downloadURL  https://raw.githubusercontent.com/QuentinGibson/Amazon-Tampermonkey/master/addToBag.js
 // @grant        none
 // ==/UserScript==
