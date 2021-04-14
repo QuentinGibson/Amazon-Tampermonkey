@@ -13,7 +13,6 @@
   // These Variable depend on the website
   var expirationDate = document.getElementsByName('expiration_date')
   var firstQuantity = document.getElementsByName('quantity')
-  var
 
   var codeSelectorElement = document.createElement('select')
   codeSelectorElement.innerHTML = `
