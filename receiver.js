@@ -14,12 +14,20 @@
 
 
 (function() {
-    function getCookie(name) {
-        if (document.cookie) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 1) return parts.pop().split(';').shift();
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
         }
+        return "";
     }
     function delete_cookie(name) {
         if( getCookie( name ) ) {
@@ -28,7 +36,7 @@
     }
     function setCookie(cname, cvalue, exMinutes) {
         const d = new Date();
-        d.setTime(d.getTime() + (exMinutes  * 59 * 1000));
+        d.setTime(d.getTime() + (exMinutes * 60 * 1000));
         const expires = "expires="+d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
@@ -50,8 +58,8 @@
             const locationValue = locationInputElement.value
             const binValue = binInputElement.value
             const POValue = POInputElement.value
-            setCookie('location', locationValue)
-            setCookie('bin', binValue)
+            setCookie('location', locationValue, 10)
+            setCookie('bin', binValue, 10)
             getASINFromPO(POValue, locationValue, binValue)
         })
 
@@ -77,15 +85,15 @@
             const asins = [];
             const container = document.implementation.createHTMLDocument().documentElement;
             container.innerHTML = response;
-            const table = container.getElementsByTagName('table')[3];
+            const table = container.getElementsByTagName('table')[2];
             const tableRows = [...table.getElementsByTagName('tr')];
             tableRows.shift();
             for (let tableRow of tableRows) {
-                const asins = tableRow.firstChild.lastChild.firstChild.innerHTML;
-                const asins_string = JSON.stringify(asins)
-                asins.push(asins_string);
+                const asin = tableRow.firstChild.lastChild.firstChild.innerHTML;
+                asins.push(asin);
             }
-            setCookie(`asins`, asins, 10)
+            const asins_string = JSON.stringify(asins)
+            setCookie(`asins`, asins_string, 10)
         }
 
     }
@@ -104,18 +112,20 @@
             const location = getCookie('location')
             const currentASIN = asins[0];
             const pageASIN = document.getElementsByTagName('h4')[0]
-            if (pageASIN.innerHTML.includes(currentASIN)) {
-                const pageLocation = document.getElementsByClassName('a-span5')[12]
-                if (pageLocation.innerHTML.includes(location)) {
-                    moveToBIN(currentASIN, location);
-                    asins.shift();
-                    setCookie(`asins`, asins, 10)
+            if (pageASIN) {
+                if (pageASIN.innerHTML.includes(currentASIN)) {
+                    const pageLocation = document.getElementsByClassName('a-span5')[12]
+                    if (pageLocation.innerHTML.includes(location)) {
+                        moveToBIN(currentASIN, location);
+                        asins.shift();
+                        setCookie(`asins`, asins, 10)
+                    }
                 }
             } else {
-                const asinInputElement = document.getElementsByName("asin")
+                const asinInputElement = document.getElementsByName("asin")[0]
                 asinInputElement.value = currentASIN
-                const asinFormSubmit = document.querySelectorAll("input[type=submit]")[2]
-                asinFormSubmit.submit();
+                const asinFormSubmit = document.querySelectorAll("input[type=submit]")[0]
+                asinFormSubmit.click();
             }
         }
     }
