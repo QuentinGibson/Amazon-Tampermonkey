@@ -18,6 +18,8 @@
     jQuery.noConflict();
     jQuery(document).ready(function ($) {
         setTimeout(setInterval(start, 1000), 2000)
+        $.cookie('test', true)
+        jQuery.cookie('test', ['foo', 'bar'])
 
         const container = document.createElement('div')
        
