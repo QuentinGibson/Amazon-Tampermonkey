@@ -7,6 +7,8 @@
 // @match        *gsflearning.sjc1.qualtrics.com/jfe/form/*
 // @icon         https://www.google.com/s2/favicons?domain=qualtrics.com
 // @require http://code.jquery.com/jquery-3.4.1.min.js
+// @require http://code.jquery.com/jquery-latest.js
+// @require https://raw.githubusercontent.com/js-cookie/js-cookie/master/src/js.cookie.js
 // @grant        none
 // run_at        document-end
 // ==/UserScript==
@@ -16,15 +18,25 @@
     jQuery.noConflict();
     jQuery(document).ready(function ($) {
         setTimeout(setInterval(start, 1000), 2000)
+
+        const container = document.createElement('div')
        
         function start() {
              const answerQuestion = questionClassName => {
-            if (questionClassName !== null) { jQuery(`#${questionClassName}`).click() }
-            jQuery('#NextButton').click()
-        }
+                 if (questionClassName !== null) { jQuery(`#${questionClassName}`).click() }
+                 jQuery('#NextButton').click()
+             }
+             const renderInput = (container) => {
+                 const radio = 
+                 container.append()
+             }
             const UGA2 = 107
 
-            if (isFirstPage()) { jQuery('.Selection')[0].value = UGA2; jQuery('img').hide() }
+            if (isFirstPage()) { 
+                jQuery('.Selection')[0].value = UGA2;
+                jQuery('img').hide();
+                renderInput(container);
+                }
             if (isSecondPage()) { answerQuestion('QID8-2-label') }
             if (isThirdPage()) { answerQuestion('QID5-1-label') }
             if (isFourthPage()) { answerQuestion('QID6-1-label') }
