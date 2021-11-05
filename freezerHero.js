@@ -7,7 +7,6 @@
 // @match        *gsflearning.sjc1.qualtrics.com/jfe/form/*
 // @icon         https://www.google.com/s2/favicons?domain=qualtrics.com
 // @require http://code.jquery.com/jquery-3.4.1.min.js
-// @require http://code.jquery.com/jquery-latest.js
 // @require https://raw.githubusercontent.com/js-cookie/js-cookie/master/src/js.cookie.js
 // @grant        none
 // run_at        document-end
@@ -18,12 +17,15 @@
     jQuery.noConflict();
     jQuery(document).ready(function ($) {
         setTimeout(setInterval(start, 1000), 2000)
-        $.cookie('test', true)
         jQuery.cookie('test', ['foo', 'bar'])
+        const list = jQuery.cookie('test')
+        console.log(list)
 
-        const container = document.createElement('div')
        
         function start() {
+
+            const container = document.createElement('div')
+
              const answerQuestion = questionClassName => {
                  if (questionClassName !== null) { jQuery(`#${questionClassName}`).click() }
                  jQuery('#NextButton').click()
