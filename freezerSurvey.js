@@ -1,0 +1,94 @@
+// ==UserScript=
+// @name         New Userscript
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://gsflearning.sjc1.qualtrics.com/jfe/form/SV_0VQwqtXIaDmjQnY
+// @icon         https://www.google.com/s2/favicons?domain=qualtrics.com
+// @grant        none
+// ==/UserScript==
+
+(function () {
+    'use strict';
+    setTimeout(() => setInterval(start, 1000), 1500)
+
+    function start() {
+        const UGA2 = 107
+        const firstPage = jQuery('.QuestionText')[0].innerHTML === 'What is your login?'
+        const secondPage = jQuery('.QuestionText')[0].innerHTML === 'Was any piece of PPE unavailable?'
+        const thirdPage = jQuery('.QuestionText')[0].innerHTML === '<div style="text-align: center;"><span style="font-size:29px;"><span style="line-height: 115%; font-family: Arial, sans-serif; outline: rgb(0, 0, 0) solid 0px;" tabindex="-1">You have a 2 hour max time per 24 hours, <br></span></span></div><div style="text-align: center;"><span style="font-size:29px;"><span style="line-height: 115%; font-family: &quot;Arial&quot;, sans-serif;">do you commit to that time limit?</span></span><br>\n<br>\n<br>\n<br>\n<img src="https://gsflearning.sjc1.qualtrics.com/CP/Graphic.php?IM=IM_3kh1k7nPAdrxrp4" style="width: 382px; height: 392px;" data-image-state="ready"></div>\n\n<div style="text-align: center;">&nbsp;</div>'
+        const fourthPage = jQuery('.QuestionText')[0].innerHTML === '<div style="text-align: center;"><span style="font-size: 29px; outline: rgb(0, 0, 0) solid 0px;" tabindex="-1">You <strong>must</strong> warm up every 30 minutes for 5 minutes. <br></span></div><div style="text-align: center;"><span style="font-size:29px;">Do you commit to that warm up period?</span><br>\n<img src="https://gsflearning.sjc1.qualtrics.com/CP/Graphic.php?IM=IM_6htHVD5abJmS84u" style="width: 526px; height: 499px;" data-image-state="ready"></div>'
+        const lastPage = jQuery('.QuestionText')[0].innerHTML === '<div style="text-align: center;"><strong><span style="font-size: 32px; outline: rgb(0, 0, 0) solid 0px;" tabindex="-1">You may enter the freezer safely!</span></strong></div>'
+
+        const submitPage = () => {
+            jQuery('#NextButton').click()
+        }
+
+        function handleFirstPage() {
+            jQuery('select')[0].value = UGA2
+            jQuery('label[for="QR~QID3~1"]').click()
+        }
+
+        function handleSecondPage() {
+            jQuery('label[for="QR~QID8~2"').click()
+            submitPage()
+        }
+
+        function handleThirdPage() {
+            jQuery('label[for="QR~QID5~1"]').click()
+            submitPage()
+        }
+        function handleFourthPage() {
+            jQuery('label[for="QR~QID6~1"]').click()
+            submitPage()
+        }
+
+        function handleLastPage() {
+            submitPage()
+        }
+
+        if (firstPage) {
+            handleFirstPage()
+        } else if (secondPage) {
+            handleSecondPage()
+        } else if (thirdPage) {
+            handleThirdPage()
+        } else if (fourthPage) {
+            handleFourthPage()
+        } else if (lastPage) {
+            handleLastPage()
+            incrementCount()
+        }
+
+        class cookie {
+            getCookie(cName) {
+                const name = cName + "=";
+                const cDecoded = decodeURIComponent(document.cookie); //to be careful
+                const cArr = cDecoded.split('; ');
+                let res;
+                cArr.forEach(val => {
+                    if (val.indexOf(name) === 0) res = val.substring(name.length);
+                })
+                return res;
+            }
+
+            setCookie(cName, cValue, expDays) {
+                let date = new Date();
+                date.setTime(date.getTime() + (expDays * 24 * 60 * 60 * 1000));
+                const expires = "expires=" + date.toUTCString();
+                document.cookie = cName + "=" + cValue + "; " + expires + "; path=/";
+            }
+
+            updateCookie(cName, cValue, expDays) {
+                setCookie(cName, cValue, expDays)
+            };
+
+            deleteCookie(cName) {
+                document.cookie = `${cName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+            }
+
+        }
+    }
+
+})();
